@@ -7,12 +7,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Just allow post request to this route
-  if (req.method !== 'POST') {
-    return res.status(405).end();
-  }
-
   try {
+    // Just allow post request to this route
+    if (req.method !== 'POST') {
+      return res.status(405).end();
+    }
+
     const { email, name, password } = req.body;
 
     // Verify if already exists an user with this email on the db
@@ -44,7 +44,6 @@ export default async function handler(
     // Return an status 200 and a json of the user info
     return res.status(200).json(user);
   } catch (error) {
-    console.log(error);
-    return res.status(400).end();
+    return res.status(400).json({ error: `Something went wrong: ${error}` });
   }
 }
