@@ -1,7 +1,7 @@
 import { NextPageContext } from 'next';
-import { getSession, signOut } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 
-import useCurrentUser from '../hooks/useCurrentUser';
+import Navbar from '../components/Navbar';
 
 // Check if the user is logged, if its not redirect to the auth page
 export async function getServerSideProps(context: NextPageContext) {
@@ -23,15 +23,9 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 export default function Home() {
-  const { data: user } = useCurrentUser();
-
   return (
     <>
-      <h1 className="text-2xl text-green-500">Netflix Clone</h1>
-      <p className="text-white">Logged is as : {user?.name}</p>
-      <button onClick={() => signOut()} className="h-10 w-full bg-white">
-        Logout!
-      </button>
+      <Navbar />
     </>
   );
 }
