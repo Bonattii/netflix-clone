@@ -1,11 +1,15 @@
 import React from 'react';
 import { signOut } from 'next-auth/react';
 
+import useCurrentUser from '../hooks/useCurrentUser';
+
 interface AccountMenuProps {
   visible?: boolean;
 }
 
 const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
+  const { data } = useCurrentUser();
+
   if (!visible) return null;
 
   return (
@@ -19,7 +23,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
           />
 
           <p className="text-white text-sm group-hover/item:underline">
-            Username
+            {data?.name}
           </p>
         </div>
 

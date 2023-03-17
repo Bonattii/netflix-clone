@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import useBillboard from '../hooks/useBillboard';
+import useInfoModal from '../hooks/useInfoModel';
 
 import PlayButton from './PlayButton';
 
 const Billboard = () => {
   const { data } = useBillboard();
   const [playVideo, setPlayVideo] = useState(false);
+  const { openModal } = useInfoModal();
+
+  const handleOpenModal = useCallback(() => {
+    openModal(data?.id);
+  }, [openModal, data?.id]);
 
   useEffect(() => {
     setInterval(() => setPlayVideo(true), 4000);
@@ -45,6 +51,7 @@ const Billboard = () => {
           <PlayButton movieId={data?.id} />
 
           <button
+            onClick={handleOpenModal}
             className="
             bg-white
             text-white
