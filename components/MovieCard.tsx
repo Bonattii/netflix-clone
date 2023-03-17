@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { BiChevronDown } from 'react-icons/bi';
@@ -15,9 +15,15 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
   const router = useRouter();
   const { openModal } = useInfoModal();
 
+  const redirectToWatch = useCallback(() => {
+    router.push(`/watch/${data.id}`);
+  }, [router, data.id]);
+
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
+        onClick={redirectToWatch}
+        draggable={false}
         className="
           cursor-pointer
           object-cover
@@ -55,6 +61,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
         "
       >
         <img
+          draggable={false}
           className="cursor-pointer object-cover transition duration shadow-xl rounded-t-md w-full h-[12vw]"
           src={data.thumbnailUrl}
           alt={`${data.title}'s thumbnail`}
